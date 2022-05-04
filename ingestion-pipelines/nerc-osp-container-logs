@@ -1,11 +1,10 @@
-PUT _ingest/pipeline/nerc-osp-container-logs
 {
    "processors":
    [
      {
        "set": {
          "field": "nerc.ingest.version",
-         "value": "0.2"
+         "value": "0.3"
        }
      },
      {
