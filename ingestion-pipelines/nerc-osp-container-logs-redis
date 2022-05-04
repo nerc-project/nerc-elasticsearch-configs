@@ -12,7 +12,7 @@ PUT _ingest/pipeline/nerc-osp-container-logs-redis
        "grok": {
          "field": "message",
          "patterns": [
-           "%{NOTSPACE:nerc.syslog.pid} %{REDISTIMESTAMP:nerc.syslog.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}"
+           "%{NOTSPACE:nerc.log.pid} %{REDISTIMESTAMP:nerc.syslog.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}"
          ],
          "pattern_definitions": {
 	   "REDISTIMESTAMP": "%{MONTHDAY} %{MONTH} %{YEAR} %{TIME}",

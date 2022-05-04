@@ -5,7 +5,7 @@ PUT _ingest/pipeline/nerc-osp-container-logs
      {
        "set": {
          "field": "nerc.ingest.version",
-         "value": "0.1"
+         "value": "0.2"
        }
      },
      {

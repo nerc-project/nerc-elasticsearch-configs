@@ -12,11 +12,11 @@ PUT _ingest/pipeline/nerc-osp-container-logs-catchall
        "grok": {
          "field": "message",
          "patterns": [
-           "%{SYSLOGTIMESTAMP:nerc.syslog.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}",
-           "%{TIMESTAMP_ISO8601:nerc.syslog.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}",
-           "%{SYSLOGTIMESTAMP:nerc.syslog.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}",
-           "%{TIMESTAMP_ISO8601:nerc.syslog.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}",
-	   "%{TIMESTAMP_ISO8601:nerc.syslog.timestamp}. %{GREEDYMULTILINE:nerc.syslog.message}"
+           "%{SYSLOGTIMESTAMP:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}",
+           "%{TIMESTAMP_ISO8601:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}",
+           "%{SYSLOGTIMESTAMP:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}",
+           "%{TIMESTAMP_ISO8601:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}",
+	   "%{TIMESTAMP_ISO8601:nerc.log.timestamp}. %{GREEDYMULTILINE:nerc.syslog.message}"
          ],
          "pattern_definitions": {
            "GREEDYMULTILINE": "(.|\n)*"
