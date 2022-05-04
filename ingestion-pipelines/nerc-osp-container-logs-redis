@@ -1,0 +1,46 @@
+PUT _ingest/pipeline/nerc-osp-container-logs-redis
+{
+  "processors":
+   [
+     {
+       "set": {
+         "field": "nerc.ingest.parse.selected",
+         "value": "redis"
+       }
+     },
+     {
+       "grok": {
+         "field": "message",
+         "patterns": [
+           "%{NOTSPACE:nerc.syslog.pid} %{REDISTIMESTAMP:nerc.syslog.timestamp} %{GREEDYMULTILINE:nerc.syslog.message}"
+         ],
+         "pattern_definitions": {
+	   "REDISTIMESTAMP": "%{MONTHDAY} %{MONTH} %{YEAR} %{TIME}",
+           "GREEDYMULTILINE": "(.|\n)*"
+         },
+         "trace_match": true,
+         "on_failure": [
+          {
+             "set": {
+               "field": "nerc.ingest.parse.fail",
+               "value": "1"
+             }
+           },
+           {
+             "set": {
+               "field": "nerc.ingest.parse.error",
+               "value": "{{ _ingest.on_failure_message }}"
+             }
+           }
+         ]
+       }
+     },
+     {
+       "set": {
+         "field": "nerc.ingest.parse.match",
+         "value": "{{_ingest._grok_match_index}}"
+       }
+     }
+   ]
+}
+

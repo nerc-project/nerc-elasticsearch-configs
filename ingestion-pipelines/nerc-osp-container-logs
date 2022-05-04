@@ -1,0 +1,31 @@
+PUT _ingest/pipeline/nerc-osp-container-logs
+{
+   "processors":
+   [
+     {
+       "set": {
+         "field": "nerc.ingest.version",
+         "value": "0.1"
+       }
+     },
+     {
+       "set": {
+         "field": "nerc.ingest.parse.selected",
+         "value": "none"
+       }
+     },
+     {
+       "pipeline": {
+         "name": "nerc-osp-container-logs-redis",
+         "if": "ctx.log.file.path == \"/var/log/containers/redis/redis.log\""
+       }
+     },
+     {
+       "pipeline": {
+         "name": "nerc-osp-container-logs-catchall",
+         "if": "ctx.nerc.ingest.parse.selected == \"none\""
+       }
+     }
+   ]
+}
+
