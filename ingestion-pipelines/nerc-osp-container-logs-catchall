@@ -11,14 +11,14 @@
        "grok": {
          "field": "message",
          "patterns": [
-           "%{SYSLOGTIMESTAMP:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.log.message}",
-           "%{TIMESTAMP_ISO8601:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.log.message}",
+           "%{TIMESTAMP_ISO8601_MOD1:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.log.message}",
            "%{SYSLOGTIMESTAMP:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.log.message}",
            "%{TIMESTAMP_ISO8601:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.log.message}",
 	   "%{TIMESTAMP_ISO8601:nerc.log.timestamp}. %{GREEDYMULTILINE:nerc.log.message}"
          ],
          "pattern_definitions": {
-           "GREEDYMULTILINE": "(.|\n)*"
+           "GREEDYMULTILINE": "(.|\n)*",
+           "TIMESTAMP_ISO8601_MOD1": "%{YEAR}-%{MONTHNUM}-%{MONTHDAY}[T ]%{ISO8601_HOUR}:?%{MINUTE}(?::?%{SECOND}) %{ISO8601_TIMEZONE}"
          },
          "trace_match": true,
          "on_failure": [

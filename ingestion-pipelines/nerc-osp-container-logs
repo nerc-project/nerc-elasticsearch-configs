@@ -36,7 +36,8 @@
         "field": "nerc.log.timestamp",
         "formats": [
           "ISO8601",
-          "UNIX"
+          "UNIX",
+          "yyyy-MM-dd HH:mm:ss.SSS"
         ],
         "target_field": "@timestamp",
         "timezone": "America/New_York",
