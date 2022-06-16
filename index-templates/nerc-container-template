@@ -1,0 +1,12 @@
+{
+  "priority": 1,
+  "index_patterns" : ["nerc-container-*"],
+  "data_stream": { },
+  "template": {
+    "settings" : {
+      "index.lifecycle.name": "nerc-container-ilm",
+      "index.lifecycle.rollover_alias": "nerc-container-alias"
+    }
+  }
+}
+
