@@ -1,0 +1,47 @@
+{
+  "processors" : 
+   [
+     {
+       "set": {
+         "field": "nerc.ingest.parse.selected",
+         "value": "catchall"
+       }
+     },
+     {
+       "grok": {
+         "field": "message",
+         "patterns": [
+           "%{TIMESTAMP_ISO8601_MOD1:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.log.message}",
+           "%{SYSLOGTIMESTAMP:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.log.message}",
+           "%{TIMESTAMP_ISO8601:nerc.log.timestamp} %{GREEDYMULTILINE:nerc.log.message}",
+	   "%{TIMESTAMP_ISO8601:nerc.log.timestamp}. %{GREEDYMULTILINE:nerc.log.message}"
+         ],
+         "pattern_definitions": {
+           "GREEDYMULTILINE": "(.|\n)*",
+           "TIMESTAMP_ISO8601_MOD1": "%{YEAR}-%{MONTHNUM}-%{MONTHDAY}[T ]%{ISO8601_HOUR}:?%{MINUTE}(?::?%{SECOND}) %{ISO8601_TIMEZONE}"
+         },
+         "trace_match": true,
+         "on_failure": [
+           {
+             "set": {
+               "field": "nerc.ingest.parse.fail",
+               "value": "1"
+             }
+           },
+           {
+             "set": {
+               "field": "nerc.ingest.parse.error",
+               "value": "{{ _ingest.on_failure_message }}"
+             }
+           }
+         ]
+       }
+     },
+     {
+       "set": {
+         "field": "nerc.ingest.parse.match",
+         "value": "{{_ingest._grok_match_index}}"
+       }
+     }
+   ]
+}

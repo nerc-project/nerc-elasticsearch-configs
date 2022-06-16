@@ -1,0 +1,72 @@
+{
+  "processors":
+  [
+    {
+      "set": {
+        "field": "nerc.ingest.version",
+        "value": "0.3"
+      }
+    },
+    {
+      "set": {
+        "field": "nerc.ingest.arrivaltime",
+        "value": "{{_ingest.timestamp}}"
+      }
+    },
+    {
+      "set": {
+        "field": "nerc.ingest.parse.selected",
+        "value": "none"
+      }
+    },
+    {
+      "set": {
+        "field": "nerc.ingest.timestamp.fail",
+        "value": "0"
+      }
+    },
+    {
+      "pipeline": {
+        "name": "nerc-osp-container-logs-redis",
+        "if": "ctx.log.file.path == \"/var/log/containers/redis/redis.log\""
+      }
+    },
+    {
+      "pipeline": {
+        "name": "nerc-osp-container-logs-catchall",
+        "if": "ctx.nerc.ingest.parse.selected == \"none\""
+      }
+    },
+    {
+      "date": {
+        "field": "nerc.log.timestamp",
+        "formats": [
+          "ISO8601",
+          "UNIX",
+          "MMM  d HH:mm:ss",
+          "MMM dd HH:mm:ss",
+          "yyyy-MM-dd HH:mm:ss.SSSSSS Z",
+          "yyyy-MM-dd HH:mm:ss.SSS",
+          "yyyy-MM-dd HH:mm:ss",
+          "dd MMM yyyy HH:mm:ss.SSS"
+        ],
+        "target_field": "@timestamp",
+        "timezone": "America/New_York",
+        "on_failure": [
+          {
+            "set": {
+              "field": "nerc.ingest.timestamp.fail",
+              "value": "1"
+            }
+          },
+          {
+            "set": {
+              "field": "nerc.ingest.timestamp.error",
+              "value": "{{ _ingest.on_failure_message }}"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
