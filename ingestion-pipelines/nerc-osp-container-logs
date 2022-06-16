@@ -20,6 +20,12 @@
       }
     },
     {
+      "set": {
+        "field": "nerc.ingest.timestamp.fail",
+        "value": "0"
+      }
+    },
+    {
       "pipeline": {
         "name": "nerc-osp-container-logs-redis",
         "if": "ctx.log.file.path == \"/var/log/containers/redis/redis.log\""
@@ -41,7 +47,8 @@
           "MMM dd HH:mm:ss",
           "yyyy-MM-dd HH:mm:ss.SSSSSS Z",
           "yyyy-MM-dd HH:mm:ss.SSS",
-          "yyyy-MM-dd HH:mm:ss"
+          "yyyy-MM-dd HH:mm:ss",
+          "dd MMM yyyy HH:mm:ss.SSS"
         ],
         "target_field": "@timestamp",
         "timezone": "America/New_York",
