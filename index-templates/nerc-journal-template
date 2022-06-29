@@ -1,0 +1,12 @@
+{
+  "priority": 1,
+  "index_patterns" : ["nerc-journal-*"],
+  "data_stream": { },
+  "template": {
+    "settings" : {
+      "index.lifecycle.name": "nerc-journal-ilm",
+      "index.lifecycle.rollover_alias": "nerc-journal-alias"
+    }
+  }
+}
+
